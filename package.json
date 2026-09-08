@@ -1,0 +1,36 @@
+{
+  "name": "emmporio-juridico",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "assets": "node scripts/prepare-assets.mjs"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.9.1",
+    "framer-motion": "^13.2.0",
+    "lucide-react": "^1.41.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-helmet-async": "^3.0.0",
+    "react-hook-form": "^7.87.0",
+    "react-router-dom": "^6.30.6",
+    "swiper": "^14.2.0",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.20",
+    "@vitejs/plugin-react": "^6.1.1",
+    "autoprefixer": "^10.5.5",
+    "ffmpeg-static": "^5.3.0",
+    "heic-convert": "^2.1.0",
+    "postcss": "^8.5.28",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^3.4.19",
+    "vite": "^8.2.2",
+    "vite-plugin-sitemap": "^0.8.2"
+  }
+}

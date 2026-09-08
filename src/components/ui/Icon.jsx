@@ -1,0 +1,115 @@
+import {
+  AlertCircle,
+  ArrowLeft,
+  ArrowRight,
+  ArrowUp,
+  ArrowUpRight,
+  Briefcase,
+  Building2,
+  Calendar,
+  Car,
+  Check,
+  CheckCircle2,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  ExternalLink,
+  FileCheck2,
+  FileSearch,
+  FileText,
+  Gavel,
+  GraduationCap,
+  KeyRound,
+  Landmark,
+  HandCoins,
+  HeartPulse,
+  Home,
+  Loader2,
+  Mail,
+  MapPin,
+  Menu,
+  MessageCircle,
+  MessagesSquare,
+  Phone,
+  PhoneCall,
+  Play,
+  Quote,
+  Scale,
+  Send,
+  Siren,
+  ShieldCheck,
+  Star,
+  Target,
+  Users,
+  X,
+} from 'lucide-react';
+import { Facebook, Instagram, Linkedin, TikTok, Youtube } from './BrandIcons.jsx';
+
+/**
+ * Registro explícito de iconos.
+ *
+ * Los datos de `src/data/` guardan el nombre del icono como texto; este mapa
+ * lo resuelve. Se importan uno por uno (y no `import * as`) para que el
+ * bundle solo incluya los que realmente se usan.
+ */
+const registry = {
+  // Logotipos de marca propios (ver BrandIcons.jsx).
+  Facebook,
+  Instagram,
+  Linkedin,
+  TikTok,
+  Youtube,
+
+  AlertCircle,
+  ArrowLeft,
+  ArrowRight,
+  ArrowUp,
+  ArrowUpRight,
+  Briefcase,
+  Building2,
+  Calendar,
+  Car,
+  Check,
+  CheckCircle2,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  ExternalLink,
+  FileCheck2,
+  FileSearch,
+  FileText,
+  Gavel,
+  GraduationCap,
+  KeyRound,
+  Landmark,
+  HandCoins,
+  HeartPulse,
+  Home,
+  Loader2,
+  Mail,
+  MapPin,
+  Menu,
+  MessageCircle,
+  MessagesSquare,
+  Phone,
+  PhoneCall,
+  Play,
+  Quote,
+  Scale,
+  Send,
+  Siren,
+  ShieldCheck,
+  Star,
+  Target,
+  Users,
+  X,
+};
+
+export function Icon({ name, ...props }) {
+  const Component = registry[name] || Scale;
+  return <Component aria-hidden="true" {...props} />;
+}
+
+export default Icon;

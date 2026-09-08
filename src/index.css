@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    @apply bg-base font-sans text-text antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
+  /* Foco dorado visible en todo elemento interactivo (requisito AA). */
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold ring-offset-2 ring-offset-base;
+  }
+
+  ::selection {
+    @apply bg-gold text-ink;
+  }
+
+  /* Barra de scroll acorde al tema oscuro. */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-base;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-surface2;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gold;
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-container px-5 md:px-8;
+  }
+
+  .section {
+    @apply py-20 md:py-28;
+  }
+
+  /* Enlace de salto para navegacion por teclado. */
+  .skip-link {
+    @apply absolute left-4 top-4 z-[100] -translate-y-32 rounded-lg bg-gold px-5 py-3 font-semibold text-ink transition-transform focus:translate-y-0;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .hairline {
+    @apply bg-gold-gradient h-px w-full;
+  }
+
+  /* Tratamiento uniforme para retratos tomados en condiciones distintas. */
+  .portrait-duotone {
+    filter: grayscale(0.55) contrast(1.06) brightness(0.92);
+    transition: filter 0.5s ease;
+  }
+
+  .group:hover .portrait-duotone,
+  .group:focus-within .portrait-duotone {
+    filter: grayscale(0) contrast(1.02) brightness(1);
+  }
+}
+
+/*
+ * Swiper se configura con sus variables, no sobrescribiendo sus reglas: sus
+ * hojas de estilo se inyectan despues de index.css y ganarian por orden.
+ */
+:root {
+  --swiper-theme-color: #b08048;
+  --swiper-pagination-color: #b08048;
+  --swiper-pagination-bullet-inactive-color: #97a0a8;
+  --swiper-pagination-bullet-inactive-opacity: 0.45;
+  --swiper-pagination-bullet-size: 9px;
+  --swiper-pagination-bullet-horizontal-gap: 5px;
+}
