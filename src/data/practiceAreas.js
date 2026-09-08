@@ -5,6 +5,9 @@
  * El orden de este array es el orden en que aparecen en el menú, en el
  * carrusel del Home, en /areas-de-practica y en el sitemap.
  *
+ * Las fotos salen de `npm run assets`: la ruta de cada una es
+ * /assets/areas/<slug>, sin sufijo ni extensión (los agrega `Photo`).
+ *
  * TODO: el listado de áreas es el que entregó el cliente. Falta que confirme
  * los servicios y el alcance de cada una tal como los presta la firma.
  */
@@ -16,8 +19,8 @@ export const practiceAreas = [
     icon: 'Scale',
     excerpt:
       'Defensa técnica en todas las etapas del proceso penal, desde la captura hasta el recurso de casación.',
-    image: '/assets/instalaciones/sala-juntas-ventanal',
-    imageAlt: 'Sala de juntas de Emmporio Jurídico con vista a la ciudad',
+    image: '/assets/areas/derecho-penal',
+    imageAlt: 'Estatua de la justicia sosteniendo la balanza',
     intro:
       'Cuando está en juego la libertad, la defensa no admite improvisación. Asumimos la representación desde la primera audiencia y construimos una estrategia probatoria sólida, documentada y sostenida en el tiempo.',
     body: [
@@ -39,8 +42,8 @@ export const practiceAreas = [
     icon: 'Home',
     excerpt:
       'Contratos, arrendamientos, procesos ejecutivos y saneamiento de títulos con revisión documental exhaustiva.',
-    image: '/assets/instalaciones/sala-juntas-mapa-mundi',
-    imageAlt: 'Sala de juntas con mapamundi y biblioteca jurídica',
+    image: '/assets/areas/derecho-civil',
+    imageAlt: 'Siluetas de una familia junto a un mazo judicial y una biblioteca jurídica',
     intro:
       'La mayoría de los pleitos civiles se ganan —o se pierden— en el documento. Por eso empezamos por auditar títulos, contratos y soportes antes de definir la estrategia.',
     body: [
@@ -61,8 +64,8 @@ export const practiceAreas = [
     icon: 'Users',
     excerpt:
       'Divorcios, custodia, alimentos y sucesiones tratados con la reserva y el cuidado que exige un asunto familiar.',
-    image: '/assets/instalaciones/despacho-ventanal',
-    imageAlt: 'Despacho privado para atención de clientes',
+    image: '/assets/areas/derecho-de-familia',
+    imageAlt: 'Manos de un abogado protegiendo las figuras de un auto, una familia y una casa',
     intro:
       'Los asuntos de familia se litigan con criterio jurídico, pero se manejan con prudencia. Buscamos primero el acuerdo; si no es posible, litigamos con firmeza.',
     body: [
@@ -84,8 +87,8 @@ export const practiceAreas = [
     icon: 'Landmark',
     excerpt:
       'Demandas contra el Estado, contratación estatal y defensa en procesos disciplinarios y de responsabilidad fiscal.',
-    image: '/assets/instalaciones/abogado-despacho',
-    imageAlt: 'Abogado de la firma trabajando en su despacho',
+    image: '/assets/areas/derecho-administrativo',
+    imageAlt: 'Balanza y mazo judicial sobre un escritorio con documentos en revisión',
     intro:
       'Litigar contra una entidad pública tiene reglas propias: términos de caducidad cortos, requisitos de procedibilidad que no se pueden saltar y una carga probatoria que hay que preparar desde el primer día.',
     body: [
@@ -107,8 +110,8 @@ export const practiceAreas = [
     icon: 'KeyRound',
     excerpt:
       'Defensa de bienes vinculados a un proceso de extinción de dominio, desde la fase inicial hasta la sentencia.',
-    image: '/assets/instalaciones/recepcion-area-trabajo',
-    imageAlt: 'Área de trabajo de las oficinas de Emmporio Jurídico',
+    image: '/assets/areas/extincion-de-dominio',
+    imageAlt: 'Mazo judicial junto a la maqueta de madera de una casa',
     intro:
       'La extinción de dominio es un proceso autónomo del penal: se dirige contra el bien y no contra la persona, y exige demostrar el origen lícito del patrimonio con documentos, no con explicaciones.',
     body: [
@@ -130,8 +133,8 @@ export const practiceAreas = [
     icon: 'Car',
     excerpt:
       'Accidentes de tránsito, comparendos y reclamación de perjuicios ante el SOAT y las aseguradoras.',
-    image: '/assets/instalaciones/pasillo-vidrio',
-    imageAlt: 'Pasillo de las oficinas de Emmporio Jurídico',
+    image: '/assets/areas/derecho-de-transito',
+    imageAlt: 'Mazo judicial detrás de dos autos de juguete tras una colisión',
     intro:
       'Un accidente de tránsito abre tres frentes al mismo tiempo —contravencional, penal y de responsabilidad civil— y lo que se declare en el primero condiciona los otros dos.',
     body: [
@@ -153,8 +156,8 @@ export const practiceAreas = [
     icon: 'ShieldCheck',
     excerpt:
       'Siniestros objetados, incumplimiento de pólizas y responsabilidad civil frente a las aseguradoras.',
-    image: '/assets/instalaciones/sala-juntas-diplomas',
-    imageAlt: 'Sala de juntas de Emmporio Jurídico con los reconocimientos de la firma',
+    image: '/assets/areas/seguros',
+    imageAlt: 'Manos abiertas sobre iconos de auto, familia, salud y ahorro',
     intro:
       'Cuantificar bien el daño es la mitad del caso. Documentamos el perjuicio material y moral con soporte pericial antes de presentar la reclamación a la aseguradora.',
     body: [
@@ -176,8 +179,8 @@ export const practiceAreas = [
     icon: 'Briefcase',
     excerpt:
       'Reclamaciones de trabajadores y asesoría preventiva a empleadores, con foco en el resultado y no en el litigio eterno.',
-    image: '/assets/instalaciones/mural-areas-practica',
-    imageAlt: 'Mural con las áreas de práctica en las oficinas de la firma',
+    image: '/assets/areas/derecho-laboral',
+    imageAlt: 'Mazo judicial junto a un casco y unas gafas de seguridad industrial',
     intro:
       'El conflicto laboral se resuelve mejor cuando se entiende la relación completa: contrato, cargas prestacionales, seguridad social y prueba del vínculo.',
     body: [
@@ -198,8 +201,8 @@ export const practiceAreas = [
     icon: 'HeartPulse',
     excerpt:
       'Pensiones, calificación de invalidez y controversias con EPS, fondos de pensiones y ARL.',
-    image: '/assets/instalaciones/abogada-trabajando',
-    imageAlt: 'Abogada de la firma revisando un expediente',
+    image: '/assets/areas/seguridad-social',
+    imageAlt: 'Hombre sosteniendo la figura de una casa con una familia dentro',
     intro:
       'Las negativas de las administradoras rara vez se resuelven en la ventanilla: se resuelven demostrando semanas cotizadas, historia laboral y origen de la enfermedad con la prueba correcta.',
     body: [
@@ -221,8 +224,8 @@ export const practiceAreas = [
     icon: 'Siren',
     excerpt:
       'Querellas por perturbación de la posesión, restitución de bienes y actuaciones ante inspecciones de policía.',
-    image: '/assets/instalaciones/asesoria-clientes',
-    imageAlt: 'Abogado de la firma atendiendo a dos clientes',
+    image: '/assets/areas/derecho-policivo',
+    imageAlt: 'Unas esposas y un mazo judicial sobre una mesa de madera',
     intro:
       'Los procesos policivos son rápidos y tienen trámite propio: quien llega sin la prueba lista a la primera audiencia normalmente ya perdió.',
     body: [
@@ -244,8 +247,8 @@ export const practiceAreas = [
     icon: 'Building2',
     excerpt:
       'Constitución, gobierno societario y contratación mercantil para empresas que quieren crecer sin contingencias.',
-    image: '/assets/instalaciones/sala-juntas-mural',
-    imageAlt: 'Sala de juntas de la firma preparada para reuniones corporativas',
+    image: '/assets/areas/derecho-corporativo',
+    imageAlt: 'Mano señalando un panel digital con iconos de contratos, balanza e instituciones',
     intro:
       'Acompañamos a la empresa desde su constitución hasta las decisiones que definen su futuro: reformas estatutarias, entrada de socios, contratos con proveedores y clientes.',
     body: [

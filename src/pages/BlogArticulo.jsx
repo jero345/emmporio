@@ -71,9 +71,7 @@ export default function BlogArticulo() {
               {author && (
                 <li className="flex items-center gap-2">
                   <Icon name="Users" size={15} className="text-gold" />
-                  <Link to={`/abogados/${author.slug}`} className="hover:text-goldSoft">
-                    {author.name}
-                  </Link>
+                  {author.name}
                 </li>
               )}
               {post.readingTime && (

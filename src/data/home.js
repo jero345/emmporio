@@ -12,10 +12,10 @@ export const heroSlides = [
     eyebrow: 'Abogados · desde 2010',
     titleTop: 'Su mejor',
     titleBottom: 'defensa',
-    // Frase de la firma. Se omiten la apertura («En Emmporio Jurídico…») y el
-    // cierre («Emmporio Jurídico: su mejor defensa») porque el nombre y el
-    // lema ya están justo encima, en el logo y en el titular del slide.
-    text: 'Estamos hechos para lo difícil y preparados para lo imposible. Asumimos los casos que otros no quieren enfrentar, con estrategia, experiencia y determinación. Cuando el desafío es mayor, nuestra defensa también lo es.',
+    // La frase de la firma («estamos hechos para lo difícil…») ya no va aquí:
+    // vive completa en la franja de `manifiesto`, justo debajo del hero. Este
+    // slide dice qué hace la firma para que no se lean dos veces lo mismo.
+    text: 'Defendemos a personas y empresas en once áreas del derecho, de lo penal y lo civil a lo laboral y la seguridad social. Desde nuestras oficinas en el centro de Medellín.',
     image: '/assets/instalaciones/recepcion-logo',
     imageAlt: 'Recepción de Emmporio Jurídico con el logotipo iluminado',
     // Retrato opcional: se monta como figura en la columna derecha, sobre la
@@ -29,12 +29,12 @@ export const heroSlides = [
     titleTop: 'Cuando está en juego',
     titleBottom: 'su libertad',
     text: 'Defensa técnica desde la primera audiencia hasta el recurso de casación. Sin improvisación y sin promesas que no podamos sostener ante un juez.',
-    image: '/assets/instalaciones/abogados-con-expedientes',
-    imageAlt: 'Dos abogados de Emmporio Jurídico con los expedientes de sus casos en las oficinas de la firma',
-    // La banda del hero es mucho más ancha que la foto, así que `object-cover`
-    // recorta arriba y abajo. Anclado arriba, el recorte se lo lleva el piso
-    // en vez de las cabezas.
-    imagePosition: 'object-top',
+    image: '/assets/instalaciones/socio-entrevista-despacho',
+    imageAlt: 'Edward Jeferson Becerra Cossio, socio fundador de Emmporio Jurídico, durante una entrevista en su despacho',
+    // La foto es vertical y la banda del hero es mucho más ancha, así que
+    // `object-cover` se come casi toda la altura. Al 30 % el recorte deja
+    // dentro la cabeza y las manos, que es donde está la acción.
+    imagePosition: 'object-[50%_30%]',
   },
   {
     id: 'h3',
@@ -49,6 +49,20 @@ export const heroSlides = [
     imagePosition: 'object-[60%_top]',
   },
 ];
+
+/**
+ * Declaración de la firma, tal como la entregó el cliente. Va en una franja
+ * propia justo debajo del hero, no dentro del slider: el slider rota cada
+ * siete segundos y esta frase tiene que quedarse quieta.
+ *
+ * El cierre lleva la marca con las dos emes; el original del cliente traía
+ * «Emporio» en esa última línea.
+ */
+export const manifiesto = {
+  lead: 'En Emmporio Jurídico estamos hechos para lo difícil y preparados para lo imposible.',
+  body: 'Asumimos los casos que otros no quieren enfrentar, con estrategia, experiencia y determinación. Cuando el desafío es mayor, nuestra defensa también lo es.',
+  signature: 'Emmporio Jurídico: su mejor defensa',
+};
 
 export const aboutSection = {
   eyebrow: 'Sobre la firma',

@@ -1,5 +1,6 @@
 import { Seo } from '../components/Seo.jsx';
 import { Hero } from '../components/sections/Hero.jsx';
+import { Manifiesto } from '../components/sections/Manifiesto.jsx';
 import { About } from '../components/sections/About.jsx';
 import { PracticeAreas } from '../components/sections/PracticeAreas.jsx';
 import { WhyChooseUs } from '../components/sections/WhyChooseUs.jsx';
@@ -32,6 +33,7 @@ export default function Home() {
       />
 
       <Hero />
+      <Manifiesto />
       <About />
       <PracticeAreas />
       <WhyChooseUs />

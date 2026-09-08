@@ -63,25 +63,6 @@ export const legalServiceSchema = (practiceAreas = []) => ({
   },
 });
 
-/** JSON-LD Attorney para los perfiles del equipo. */
-export const attorneySchema = (attorney) => ({
-  '@context': 'https://schema.org',
-  '@type': 'Attorney',
-  name: attorney.name,
-  jobTitle: attorney.role,
-  knowsAbout: attorney.specialty,
-  url: absolute(`/abogados/${attorney.slug}`),
-  image: absolute(`${attorney.image}-1200.webp`),
-  email: attorney.email,
-  telephone: attorney.phone,
-  worksFor: {
-    '@type': 'LegalService',
-    name: siteConfig.name,
-    url: absolute('/'),
-  },
-  address,
-});
-
 /** JSON-LD BlogPosting para los artículos. */
 export const blogPostingSchema = (post, author) => ({
   '@context': 'https://schema.org',

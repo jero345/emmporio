@@ -7,6 +7,7 @@
  * y genera:
  *   - src/assets/brand/            logo invertido, isotipo, favicons, og-image
  *   - public/assets/instalaciones/ fotos .webp en 800 y 1600 px
+ *   - public/assets/areas/         fotos de cada area de practica en 800 y 1600 px
  *   - public/assets/equipo/        retratos .webp 3:4 en 600 y 1200 px
  *   - public/assets/prensa/        videos .mp4 optimizados y sus portadas
  *   - public/documentos/           PDFs de autos y sentencias (no indexados)
@@ -29,6 +30,7 @@ const SRC = {
   prensa: 'PRENSA',
   casos: 'CASOS NOTABLES',
   resultados: 'IMAGENES RESULTADOS',
+  areas: 'IMAGENES AREAS',
 };
 
 const OUT = {
@@ -38,6 +40,7 @@ const OUT = {
   prensa: 'public/assets/prensa',
   casos: 'public/assets/casos',
   resultados: 'public/assets/resultados',
+  areas: 'public/assets/areas',
   documentos: 'public/documentos',
 };
 
@@ -201,6 +204,9 @@ const INSTALACIONES = {
   'DSC_0059.JPG': 'abogado-despacho',
   'DSC_0058.NEF': 'socio-despacho-lectura',
   'DSC_0017.NEF': 'asesoria-clientes',
+  // Fotograma de la entrevista al socio fundador. Llego por WhatsApp y es
+  // vertical: en el hero se recorta a la banda con `imagePosition`.
+  'WhatsApp Image 2026-09-05 at 2.10.52 PM.jpeg': 'socio-entrevista-despacho',
 };
 
 // TODO: confirmar con el cliente el nombre real de cada persona.
@@ -276,6 +282,27 @@ const RESULTADOS = {
   'Derecho Laboral.png': 'reintegro-laboral',
   'Derecho civil.png': 'restitucion-inmueble',
   'Derecho Familoiar.png': 'custodia-y-alimentos',
+};
+
+/* --------------------------------------------------- areas de practica */
+
+// Foto de cabecera de cada area. La clave es el nombre tal como llego del
+// cliente y el valor es el slug del area en `src/data/practiceAreas.js`, asi
+// que la ruta que se guarda en los datos sale sola: /assets/areas/<slug>.
+// Se recortan a 3:2 centrado, que es el punto medio entre el 4:3 de la
+// tarjeta, el 16:9 del detalle y la banda ancha del PageHero.
+const AREAS = {
+  'penal.jpg': 'derecho-penal',
+  'Maestria en derecho civil 2022.jpg': 'derecho-civil',
+  'derecho-familiar.jpg': 'derecho-de-familia',
+  'derecho_administrativo.width-640.webp': 'derecho-administrativo',
+  'exticiondedominio.jpeg': 'extincion-de-dominio',
+  'transito.avif': 'derecho-de-transito',
+  'seguros.webp': 'seguros',
+  'derecho-laboral-1-e1551651916418.jpg': 'derecho-laboral',
+  'seguridad social.webp': 'seguridad-social',
+  'derecho policivo.jpeg': 'derecho-policivo',
+  'derechoempresarialcorporativocolombia2.jpg': 'derecho-corporativo',
 };
 
 /* -------------------------------------------------------------- documentos */
@@ -408,6 +435,8 @@ await buildPhotos(SRC.casos, OUT.casos, CASOS, [800, 1600], 10 / 16, { fit: 'con
 await buildPhotos(SRC.resultados, OUT.resultados, RESULTADOS, [800, 1600], 10 / 16, {
   position: 'centre',
 });
+console.log('\nAreas de practica');
+await buildPhotos(SRC.areas, OUT.areas, AREAS, [800, 1600], 2 / 3, { position: 'centre' });
 console.log('\nDocumentos');
 buildDocumentos();
 console.log('\nPrensa');

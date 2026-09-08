@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 import { attorneys } from '../../data/attorneys.js';
 import { Button } from '../ui/Button.jsx';
 import { Icon } from '../ui/Icon.jsx';
@@ -11,57 +9,46 @@ import { SectionHeading } from '../ui/SectionHeading.jsx';
  * Tarjeta de abogado. El retrato lleva el tratamiento duotono uniforme
  * (`portrait-duotone`) para que fotos tomadas en condiciones distintas se
  * vean coherentes; al hacer hover recupera el color.
+ *
+ * La tarjeta no enlaza a ningun lado: el equipo se presenta aqui mismo y los
+ * unicos enlaces son los iconos de redes de cada abogado.
  */
 export function AttorneyCard({ attorney }) {
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-colors duration-300 hover:border-gold">
-      {/* `h-full` en toda la cadena: la tarjeta ocupa el alto de su celda de la
-          rejilla, asi todas quedan iguales aunque el cargo ocupe dos lineas. */}
-      <Link to={`/abogados/${attorney.slug}`} className="flex h-full flex-col">
-        <div className="relative aspect-[3/4] overflow-hidden bg-surface2">
-          <Photo
-            base={attorney.image}
-            alt={attorney.imageAlt}
-            variant="portrait"
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 45vw, 90vw"
-            className="portrait-duotone h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-card-overlay" aria-hidden="true" />
+      <div className="relative aspect-[3/4] overflow-hidden bg-surface2">
+        <Photo
+          base={attorney.image}
+          alt={attorney.imageAlt}
+          variant="portrait"
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 45vw, 90vw"
+          className="portrait-duotone h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-card-overlay" aria-hidden="true" />
 
-          {attorney.social.length > 0 && (
-            <ul className="absolute bottom-4 left-1/2 flex -translate-x-1/2 translate-y-4 items-center gap-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
-              {attorney.social.map((item) => (
-                <li key={item.name}>
-                  <a
-                    href={item.href}
-                    target={item.href.startsWith('http') ? '_blank' : undefined}
-                    rel="noopener noreferrer"
-                    aria-label={`${attorney.name} en ${item.name}`}
-                    onClick={(event) => event.stopPropagation()}
-                    className="grid h-10 w-10 place-items-center rounded-full bg-gold text-ink transition-colors hover:bg-goldSoft"
-                  >
-                    <Icon name={item.icon} size={16} />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        {attorney.social.length > 0 && (
+          <ul className="absolute bottom-4 left-1/2 flex -translate-x-1/2 translate-y-4 items-center gap-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
+            {attorney.social.map((item) => (
+              <li key={item.name}>
+                <a
+                  href={item.href}
+                  target={item.href.startsWith('http') ? '_blank' : undefined}
+                  rel="noopener noreferrer"
+                  aria-label={`${attorney.name} en ${item.name}`}
+                  className="grid h-10 w-10 place-items-center rounded-full bg-gold text-ink transition-colors hover:bg-goldSoft"
+                >
+                  <Icon name={item.icon} size={16} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
-        <div className="flex flex-1 flex-col p-4 text-center sm:p-5">
-          {/*
-            Caja de dos lineas: las especialidades largas parten en dos y sin
-            esto los nombres de la fila quedarian a alturas distintas.
-          */}
-          <p className="flex min-h-[2.9em] items-center justify-center text-[0.68rem] font-semibold uppercase leading-[1.45] tracking-[0.18em] text-goldSoft sm:text-xs sm:tracking-[0.22em]">
-            {attorney.specialty}
-          </p>
-          <h3 className="mt-2.5 font-display text-xl text-text transition-colors group-hover:text-goldSoft lg:text-2xl">
-            {attorney.name}
-          </h3>
-          <p className="mt-1.5 text-sm text-muted">{attorney.role}</p>
-        </div>
-      </Link>
+      <div className="flex flex-1 flex-col justify-center p-4 text-center sm:p-5">
+        <h3 className="font-display text-xl text-text lg:text-2xl">{attorney.name}</h3>
+        <p className="mt-1.5 text-sm text-muted">{attorney.role}</p>
+      </div>
     </article>
   );
 }

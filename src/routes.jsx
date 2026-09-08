@@ -11,7 +11,6 @@ const Nosotros = lazy(() => import('./pages/Nosotros.jsx'));
 const AreasDePractica = lazy(() => import('./pages/AreasDePractica.jsx'));
 const AreaDetalle = lazy(() => import('./pages/AreaDetalle.jsx'));
 const Abogados = lazy(() => import('./pages/Abogados.jsx'));
-const AbogadoPerfil = lazy(() => import('./pages/AbogadoPerfil.jsx'));
 const Casos = lazy(() => import('./pages/Casos.jsx'));
 const Blog = lazy(() => import('./pages/Blog.jsx'));
 const BlogArticulo = lazy(() => import('./pages/BlogArticulo.jsx'));
@@ -33,7 +32,6 @@ export const router = createBrowserRouter([
       { path: '/areas-de-practica', element: <AreasDePractica /> },
       { path: '/areas-de-practica/:slug', element: <AreaDetalle /> },
       { path: '/abogados', element: <Abogados /> },
-      { path: '/abogados/:slug', element: <AbogadoPerfil /> },
       { path: '/casos', element: <Casos /> },
       { path: '/blog', element: <Blog /> },
       { path: '/blog/:slug', element: <BlogArticulo /> },

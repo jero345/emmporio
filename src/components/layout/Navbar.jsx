@@ -76,14 +76,22 @@ export function Navbar() {
             : 'border-transparent bg-base xl:bg-base/60',
         ].join(' ')}
       >
-        {/* La barra crece con el logo y se compacta al hacer scroll. */}
+        {/*
+          La barra crece con el logo y se compacta al hacer scroll. Desde `lg`
+          el logo va bastante mas grande —hay ancho de sobra— y la barra sube
+          con el para no recortarlo.
+        */}
         <div
           className={[
             'container-site flex items-center justify-between gap-6 transition-all duration-300',
-            scrolled ? 'h-[74px]' : 'h-[92px]',
+            scrolled ? 'h-[74px] lg:h-[86px]' : 'h-[92px] lg:h-[116px]',
           ].join(' ')}
         >
-          <Logo height={scrolled ? 54 : 70} className="shrink-0 transition-all duration-300" />
+          <Logo
+            height={scrolled ? 54 : 70}
+            heightClass={scrolled ? 'h-[54px] lg:h-[66px]' : 'h-[70px] lg:h-[92px]'}
+            className="shrink-0 transition-all duration-300"
+          />
 
           <ul className="hidden items-center gap-8 xl:flex">
             {navItems.map((item) =>

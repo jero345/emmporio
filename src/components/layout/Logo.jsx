@@ -9,15 +9,19 @@ import { siteConfig } from '../../data/siteConfig.js';
  * + isotipo dorado) que genera `npm run assets` a partir del original del
  * cliente. El logo negro nunca va sobre el fondo `base`.
  */
-export function Logo({ className = '', height = 44, asLink = true }) {
+export function Logo({ className = '', height = 44, heightClass = '', asLink = true }) {
   const image = (
     <img
       src={logoLight}
       alt={`${siteConfig.name} — ${siteConfig.tagline}`}
+      // `width`/`height` van siempre: reservan el espacio y evitan el salto de
+      // maquetacion mientras carga la imagen.
       height={height}
-      style={{ height }}
-      className="w-auto"
       width={Math.round(height * 2.74)}
+      // Con `heightClass` manda el CSS, que es lo que permite un alto distinto
+      // por breakpoint; sin ella vale el alto fijo de `height`.
+      style={heightClass ? undefined : { height }}
+      className={`w-auto ${heightClass}`}
     />
   );
 

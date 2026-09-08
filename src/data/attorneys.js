@@ -1,5 +1,5 @@
 /**
- * Equipo de la firma. Alimenta /abogados y /abogados/:slug.
+ * Equipo de la firma. Alimenta /abogados.
  *
  * Las fotos salen de `FOTOGRAFIAS SOCIOS` procesadas por `npm run assets`
  * (retrato 3:4, dos anchos). La ruta se escribe SIN sufijo de ancho ni
