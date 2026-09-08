@@ -29,7 +29,10 @@ export const siteConfig = {
   mobile: '+57 312 567 6064',
   whatsapp: '573125676064',
   whatsappMessage: 'Hola, quiero agendar una consulta con Emmporio Jurídico.',
-  email: 'contacto@emmporiojuridico.com',
+  // Correo real de la firma, el que atiende el cliente. Ojo con la
+  // ortografia: la cuenta lleva una sola eme («Emporio»), a diferencia
+  // del nombre de la firma, que lleva dos.
+  email: 'emporiojuridico@hotmail.com',
 
   address: {
     street: 'Carrera 51 # 50-21, edificio Banco de Londres, piso 18, oficina 1806',

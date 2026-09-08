@@ -6,10 +6,16 @@
  * extensión: el componente arma el `srcset` con `-600.webp` y `-1200.webp`.
  *
  * Los nombres y los cargos son los que confirmó el cliente.
+ * Mientras el cliente no confirme un correo individual por persona, el
+ * enlace de cada tarjeta apunta al correo general de la firma: es preferible
+ * a mandar a un buzón que no existe.
+ *
  * TODO: faltan por confirmar las tarjetas profesionales, los correos
  * individuales, las líneas directas, la formación y el año de vinculación
  * de cada persona.
  */
+
+import { siteConfig } from './siteConfig.js';
 
 export const attorneys = [
   {
@@ -21,7 +27,7 @@ export const attorneys = [
     imageAlt: 'Edward Jeferson Becerra Cossio, socio fundador de Emmporio Jurídico',
     since: 2010,
     card: 'T.P. 000.000 C.S.J.', // TODO: tarjeta profesional real
-    email: 'direccion@emmporiojuridico.com', // TODO: confirmar el correo
+    email: siteConfig.email, // TODO: correo individual, si lo tiene
     phone: '+57 604 322 2136', // TODO: extensión directa, si la tiene
     areas: ['derecho-penal', 'extincion-de-dominio'],
     bio: [
@@ -34,7 +40,7 @@ export const attorneys = [
     ],
     // TODO: agregar el LinkedIn personal si lo tiene:
     // { name: 'LinkedIn', href: 'https://www.linkedin.com/in/…', icon: 'Linkedin' }
-    social: [{ name: 'Correo', href: 'mailto:direccion@emmporiojuridico.com', icon: 'Mail' }],
+    social: [{ name: 'Correo', href: `mailto:${siteConfig.email}`, icon: 'Mail' }],
   },
   {
     slug: 'diana-eusse',
@@ -45,7 +51,7 @@ export const attorneys = [
     imageAlt: 'Diana Patricia Eusse Arenas, socia fundadora de Emmporio Jurídico',
     since: 2010,
     card: 'T.P. 000.000 C.S.J.', // TODO
-    email: 'diana.eusse@emmporiojuridico.com', // TODO: confirmar el correo
+    email: siteConfig.email, // TODO: correo individual, si lo tiene
     phone: '+57 604 322 2136', // TODO: extensión directa, si la tiene
     areas: ['derecho-de-familia', 'derecho-civil'],
     bio: [
@@ -57,7 +63,7 @@ export const attorneys = [
       'Especialista en Derecho de Familia',
     ],
     // TODO: agregar el LinkedIn personal si lo tiene.
-    social: [{ name: 'Correo', href: 'mailto:diana.eusse@emmporiojuridico.com', icon: 'Mail' }],
+    social: [{ name: 'Correo', href: `mailto:${siteConfig.email}`, icon: 'Mail' }],
   },
   {
     slug: 'karen-becerra',
@@ -68,7 +74,7 @@ export const attorneys = [
     imageAlt: 'Karen Becerra Viana, abogada senior de Emmporio Jurídico',
     since: 2019, // TODO: confirmar el año de vinculación
     card: 'T.P. 000.000 C.S.J.', // TODO
-    email: 'contacto@emmporiojuridico.com', // TODO: correo individual, si lo tiene
+    email: siteConfig.email, // TODO: correo individual, si lo tiene
     phone: '+57 604 322 2136', // TODO: extensión directa, si la tiene
     areas: ['derecho-laboral', 'seguridad-social'],
     bio: [
@@ -76,7 +82,7 @@ export const attorneys = [
     ],
     education: ['Abogada'], // TODO
     // TODO: agregar el LinkedIn personal si lo tiene.
-    social: [{ name: 'Correo', href: 'mailto:contacto@emmporiojuridico.com', icon: 'Mail' }],
+    social: [{ name: 'Correo', href: `mailto:${siteConfig.email}`, icon: 'Mail' }],
   },
   {
     slug: 'diego-paniagua',
@@ -87,7 +93,7 @@ export const attorneys = [
     imageAlt: 'Diego Alejandro Paniagua Ospina, abogado junior de Emmporio Jurídico',
     since: 2022, // TODO: confirmar el año de vinculación
     card: 'T.P. 000.000 C.S.J.', // TODO
-    email: 'contacto@emmporiojuridico.com', // TODO: correo individual, si lo tiene
+    email: siteConfig.email, // TODO: correo individual, si lo tiene
     phone: '+57 604 322 2136', // TODO: extensión directa, si la tiene
     areas: ['derecho-civil', 'derecho-corporativo'],
     bio: [
@@ -95,7 +101,7 @@ export const attorneys = [
     ],
     education: ['Abogado'], // TODO
     // TODO: agregar el LinkedIn personal si lo tiene.
-    social: [{ name: 'Correo', href: 'mailto:contacto@emmporiojuridico.com', icon: 'Mail' }],
+    social: [{ name: 'Correo', href: `mailto:${siteConfig.email}`, icon: 'Mail' }],
   },
   {
     slug: 'veronica-carvajal',
@@ -106,7 +112,7 @@ export const attorneys = [
     imageAlt: 'Verónica Carvajal Carvajal, abogada junior de Emmporio Jurídico',
     since: 2021, // TODO: confirmar el año de vinculación
     card: 'T.P. 000.000 C.S.J.', // TODO
-    email: 'contacto@emmporiojuridico.com', // TODO: correo individual, si lo tiene
+    email: siteConfig.email, // TODO: correo individual, si lo tiene
     phone: '+57 604 322 2136', // TODO: extensión directa, si la tiene
     areas: ['derecho-policivo', 'derecho-de-transito'],
     bio: [
@@ -114,7 +120,7 @@ export const attorneys = [
     ],
     education: ['Abogada'], // TODO
     // TODO: agregar el LinkedIn personal si lo tiene.
-    social: [{ name: 'Correo', href: 'mailto:contacto@emmporiojuridico.com', icon: 'Mail' }],
+    social: [{ name: 'Correo', href: `mailto:${siteConfig.email}`, icon: 'Mail' }],
   },
 ];
 
