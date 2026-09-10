@@ -44,7 +44,7 @@ import {
   Users,
   X,
 } from 'lucide-react';
-import { Facebook, Instagram, Linkedin, TikTok, Youtube } from './BrandIcons.jsx';
+import { Facebook, Instagram, Linkedin, TikTok, WhatsApp, Youtube } from './BrandIcons.jsx';
 
 /**
  * Registro explícito de iconos.
@@ -59,6 +59,7 @@ const registry = {
   Instagram,
   Linkedin,
   TikTok,
+  WhatsApp,
   Youtube,
 
   AlertCircle,

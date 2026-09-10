@@ -81,16 +81,21 @@ export function Navbar() {
           el logo va bastante mas grande —hay ancho de sobra— y la barra sube
           con el para no recortarlo.
         */}
+        {/*
+          El logo NO se encoge al hacer scroll: el cliente lo quiere del mismo
+          tamaño en toda la página. La barra sí se compacta un poco, pero
+          siempre conserva margen suficiente para no recortarlo.
+        */}
         <div
           className={[
             'container-site flex items-center justify-between gap-6 transition-all duration-300',
-            scrolled ? 'h-[74px] lg:h-[86px]' : 'h-[92px] lg:h-[116px]',
+            scrolled ? 'h-[98px] lg:h-[136px] xl:h-[150px]' : 'h-[106px] lg:h-[148px] xl:h-[164px]',
           ].join(' ')}
         >
           <Logo
-            height={scrolled ? 54 : 70}
-            heightClass={scrolled ? 'h-[54px] lg:h-[66px]' : 'h-[70px] lg:h-[92px]'}
-            className="shrink-0 transition-all duration-300"
+            height={84}
+            heightClass="h-[84px] lg:h-[122px] xl:h-[136px]"
+            className="shrink-0"
           />
 
           <ul className="hidden items-center gap-8 xl:flex">
@@ -143,11 +148,17 @@ export function Navbar() {
           </ul>
 
           <div className="flex items-center gap-4">
+            {/*
+              El teléfono aparece al hacer scroll, cuando la franja superior ya
+              se colapsó. Desde `2xl` y no desde `xl`: con el logo al tamaño
+              actual, a 1280 px le robaba el aire al menú y «Áreas de práctica»
+              se partía en dos líneas.
+            */}
             <a
               href={siteConfig.phoneHref}
               className={[
                 'hidden items-center gap-2.5 text-sm',
-                scrolled ? 'xl:flex' : '',
+                scrolled ? '2xl:flex' : '',
               ].join(' ')}
             >
               <span className="grid h-10 w-10 place-items-center rounded-full border border-gold/40 text-gold">

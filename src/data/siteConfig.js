@@ -16,8 +16,11 @@ export const siteConfig = {
   // los años de experiencia son suyos, no de Emmporio Jurídico.
   practiceSinceYear: 1996,
 
+  // Los 30 años son los de ejercicio del socio fundador (`practiceSinceYear`),
+  // no los de la firma, que nació en 2010. La redacción lo deja explícito para
+  // que no se lea como una antigüedad que Emmporio Jurídico no tiene.
   description:
-    'Firma de abogados en Medellín con más de una década defendiendo a personas y empresas en materia penal, civil, laboral, de familia, administrativa, de seguridad social y corporativa.',
+    'Firma de abogados en Medellín con 30 años de experiencia defendiendo a personas y empresas en materia penal, civil, laboral, de familia, administrativa, de seguridad social y corporativa.',
 
   // Línea principal de la oficina (PBX). Es la que se muestra como
   // teléfono de la firma en la barra superior, el pie y la página de contacto.
@@ -33,6 +36,20 @@ export const siteConfig = {
   // ortografia: la cuenta lleva una sola eme («Emporio»), a diferencia
   // del nombre de la firma, que lleva dos.
   email: 'emporiojuridico@hotmail.com',
+
+  // Línea de urgencias penales. Es la única atención 24 horas de la firma y
+  // por eso se anuncia siempre acompañada de esa condición: fuera de lo penal
+  // rigen los horarios de `schedule`.
+  urgencias: {
+    eyebrow: 'Atención 24 horas',
+    title: 'Exclusivamente para casos penales',
+    text: 'Estamos hechos para lo difícil y preparados para lo imposible.',
+    note: 'La disponibilidad permanente aplica únicamente a asuntos penales. Las demás áreas se atienden en el horario de oficina.',
+    phones: [
+      { display: '310 534 4765', href: 'tel:+573105344765' },
+      { display: '321 778 0245', href: 'tel:+573217780245' },
+    ],
+  },
 
   address: {
     street: 'Carrera 51 # 50-21, edificio Banco de Londres, piso 18, oficina 1806',

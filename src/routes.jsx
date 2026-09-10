@@ -1,47 +1,68 @@
-import { lazy } from 'react';
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { Layout } from './components/layout/Layout.jsx';
 
 /**
- * Code splitting por ruta: cada página es un chunk aparte y el Home no
- * arrastra el peso de las páginas internas.
+ * Definición de rutas compartida por el navegador y por el prerenderizado.
+ *
+ * Cada página se carga con el `lazy` de react-router y no con `React.lazy`:
+ * hace el mismo reparto en trozos —el Home no arrastra el peso de las
+ * páginas internas— pero además el generador de HTML estático sabe resolverlo
+ * antes de renderizar, cosa que `React.lazy` no permite fuera del navegador.
  */
-const Home = lazy(() => import('./pages/Home.jsx'));
-const Nosotros = lazy(() => import('./pages/Nosotros.jsx'));
-const AreasDePractica = lazy(() => import('./pages/AreasDePractica.jsx'));
-const AreaDetalle = lazy(() => import('./pages/AreaDetalle.jsx'));
-const Abogados = lazy(() => import('./pages/Abogados.jsx'));
-const Casos = lazy(() => import('./pages/Casos.jsx'));
-const Blog = lazy(() => import('./pages/Blog.jsx'));
-const BlogArticulo = lazy(() => import('./pages/BlogArticulo.jsx'));
-const Contacto = lazy(() => import('./pages/Contacto.jsx'));
-const NotFound = lazy(() => import('./pages/NotFound.jsx'));
-const PoliticaDeDatos = lazy(() =>
-  import('./pages/Legal.jsx').then((module) => ({ default: module.PoliticaDeDatos }))
-);
-const AvisoLegal = lazy(() =>
-  import('./pages/Legal.jsx').then((module) => ({ default: module.AvisoLegal }))
-);
-
-export const router = createBrowserRouter([
+export const routes = [
   {
     element: <Layout />,
     children: [
-      { path: '/', element: <Home /> },
-      { path: '/nosotros', element: <Nosotros /> },
-      { path: '/areas-de-practica', element: <AreasDePractica /> },
-      { path: '/areas-de-practica/:slug', element: <AreaDetalle /> },
-      { path: '/abogados', element: <Abogados /> },
-      { path: '/casos', element: <Casos /> },
-      { path: '/blog', element: <Blog /> },
-      { path: '/blog/:slug', element: <BlogArticulo /> },
-      { path: '/contacto', element: <Contacto /> },
-      { path: '/politica-de-datos', element: <PoliticaDeDatos /> },
-      { path: '/aviso-legal', element: <AvisoLegal /> },
-      { path: '/404', element: <NotFound /> },
+      { path: '/', lazy: async () => ({ Component: (await import('./pages/Home.jsx')).default }) },
+      {
+        path: '/nosotros',
+        lazy: async () => ({ Component: (await import('./pages/Nosotros.jsx')).default }),
+      },
+      {
+        path: '/areas-de-practica',
+        lazy: async () => ({ Component: (await import('./pages/AreasDePractica.jsx')).default }),
+      },
+      {
+        path: '/areas-de-practica/:slug',
+        lazy: async () => ({ Component: (await import('./pages/AreaDetalle.jsx')).default }),
+      },
+      {
+        path: '/abogados',
+        lazy: async () => ({ Component: (await import('./pages/Abogados.jsx')).default }),
+      },
+      {
+        path: '/casos',
+        lazy: async () => ({ Component: (await import('./pages/Casos.jsx')).default }),
+      },
+      {
+        path: '/blog',
+        lazy: async () => ({ Component: (await import('./pages/Blog.jsx')).default }),
+      },
+      {
+        path: '/blog/:slug',
+        lazy: async () => ({ Component: (await import('./pages/BlogArticulo.jsx')).default }),
+      },
+      {
+        path: '/contacto',
+        lazy: async () => ({ Component: (await import('./pages/Contacto.jsx')).default }),
+      },
+      {
+        path: '/politica-de-datos',
+        lazy: async () => ({
+          Component: (await import('./pages/Legal.jsx')).PoliticaDeDatos,
+        }),
+      },
+      {
+        path: '/aviso-legal',
+        lazy: async () => ({ Component: (await import('./pages/Legal.jsx')).AvisoLegal }),
+      },
+      {
+        path: '/404',
+        lazy: async () => ({ Component: (await import('./pages/NotFound.jsx')).default }),
+      },
       { path: '*', element: <Navigate to="/404" replace /> },
     ],
   },
-]);
+];
 
-export default router;
+export default routes;

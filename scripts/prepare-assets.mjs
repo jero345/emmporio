@@ -10,7 +10,7 @@
  *   - public/assets/areas/         fotos de cada area de practica en 800 y 1600 px
  *   - public/assets/equipo/        retratos .webp 3:4 en 600 y 1200 px
  *   - public/assets/prensa/        videos .mp4 optimizados y sus portadas
- *   - public/documentos/           PDFs de autos y sentencias (no indexados)
+ *   - public/assets/resuelve/      recortes censurados del apartado RESUELVE
  *
  * Es idempotente: se puede volver a ejecutar cuando el cliente entregue
  * material nuevo.
@@ -18,6 +18,7 @@
 import sharp from 'sharp';
 import heicConvert from 'heic-convert';
 import ffmpegPath from 'ffmpeg-static';
+import { buildResuelve } from './resuelve.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -26,7 +27,6 @@ const SRC = {
   logos: 'LOGOS EMMPORIO',
   instalaciones: 'FOTOGRAFIAS INSTALACIONES',
   socios: 'FOTOGRAFIAS SOCIOS',
-  documentos: 'AUTOS Y SENTENCIAS',
   prensa: 'PRENSA',
   casos: 'CASOS NOTABLES',
   resultados: 'IMAGENES RESULTADOS',
@@ -41,7 +41,6 @@ const OUT = {
   casos: 'public/assets/casos',
   resultados: 'public/assets/resultados',
   areas: 'public/assets/areas',
-  documentos: 'public/documentos',
 };
 
 const BASE = '#0B0F14';
@@ -267,7 +266,10 @@ async function buildPhotos(srcDir, outDir, mapping, widths, aspect, options = {}
 // incrustado, asi que se encajan enteras (16:10) en vez de recortarse.
 const CASOS = {
   'frg.jpg': 'defensa-penal-homicidio',
-  'gghh.jpg': 'condena-37-anos',
+  // Portada a color del caso de la muneca, la que envio el Dr. Becerra. La
+  // anterior ('gghh.jpg') estaba desaturada y se confundia con el velo gris
+  // que el reproductor pone encima de las portadas de video.
+  'WhatsApp Image 2026-09-05 at 3.58.58 PM.jpeg': 'muneca-condena-37-anos',
   'rhfh.jpg': 'caso-metro-de-medellin',
 };
 
@@ -307,24 +309,9 @@ const AREAS = {
 
 /* -------------------------------------------------------------- documentos */
 
-const DOCUMENTOS = {
-  '20230627 SENTENCIA INOCENCIA YOLBER.pdf': 'sentencia-absolutoria-2023.pdf',
-  '20260727 LIBERTAD POR VENCIMIENTO DE TERMINOS.pdf': 'libertad-por-vencimiento-de-terminos.pdf',
-  'SENTENCIA GUILLERMO GARZON.pdf': 'sentencia-favorable-proceso-penal.pdf',
-};
-
-function buildDocumentos() {
-  ensure(OUT.documentos);
-  for (const [original, slug] of Object.entries(DOCUMENTOS)) {
-    const file = path.join(SRC.documentos, original);
-    if (!exists(file)) {
-      console.warn(`  ! No se encontro ${original}`);
-      continue;
-    }
-    fs.copyFileSync(file, path.join(OUT.documentos, slug));
-    console.log(`  ${slug}`);
-  }
-}
+// Los autos y sentencias ya NO se copian a `public/`. De cada decision se
+// publica solo el recorte censurado del RESUELVE que arma `resuelve.mjs`; el
+// PDF completo se queda en `AUTOS Y SENTENCIAS/`, fuera del repositorio.
 
 /* ------------------------------------------------------------------ videos */
 
@@ -437,8 +424,8 @@ await buildPhotos(SRC.resultados, OUT.resultados, RESULTADOS, [800, 1600], 10 / 
 });
 console.log('\nAreas de practica');
 await buildPhotos(SRC.areas, OUT.areas, AREAS, [800, 1600], 2 / 3, { position: 'centre' });
-console.log('\nDocumentos');
-buildDocumentos();
+console.log('\nApartados RESUELVE');
+await buildResuelve();
 console.log('\nPrensa');
 await buildVideos();
 console.log('\nListo.\n');

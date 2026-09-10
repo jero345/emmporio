@@ -1,19 +1,37 @@
+import { useState } from 'react';
+
 import { attorneys } from '../../data/attorneys.js';
 import { Button } from '../ui/Button.jsx';
 import { Icon } from '../ui/Icon.jsx';
+import { Modal } from '../ui/Modal.jsx';
 import { Photo } from '../ui/Photo.jsx';
 import { Reveal } from '../ui/Reveal.jsx';
 import { SectionHeading } from '../ui/SectionHeading.jsx';
+
+/**
+ * Anchos de la tarjeta dentro de la fila.
+ *
+ * La rejilla se arma con flex y no con `grid` a propósito: cuando la última
+ * fila queda incompleta —cinco personas en tres columnas— `grid` las alinea a
+ * la izquierda y quedan descolgadas. Con `flex-wrap` y `justify-center` la
+ * fila corta queda centrada bajo las demás.
+ *
+ * El ancho sale de (100 % − huecos) ÷ columnas, con el `gap-6` (1.5 rem) que
+ * usa el contenedor.
+ */
+const CARD_WIDTH =
+  'w-[calc(50%-0.75rem)] md:w-[calc(33.333%-1rem)] xl:w-[calc(20%-1.2rem)]';
 
 /**
  * Tarjeta de abogado. El retrato lleva el tratamiento duotono uniforme
  * (`portrait-duotone`) para que fotos tomadas en condiciones distintas se
  * vean coherentes; al hacer hover recupera el color.
  *
- * La tarjeta no enlaza a ningun lado: el equipo se presenta aqui mismo y los
- * unicos enlaces son los iconos de redes de cada abogado.
+ * Toda la tarjeta abre la ficha del abogado. El botón es una capa absoluta
+ * por encima de la tarjeta en vez de envolverla: así los enlaces de redes
+ * pueden quedar por encima sin anidar un `<a>` dentro de un `<button>`.
  */
-export function AttorneyCard({ attorney }) {
+export function AttorneyCard({ attorney, onOpen }) {
   return (
     <article className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface transition-colors duration-300 hover:border-gold">
       <div className="relative aspect-[3/4] overflow-hidden bg-surface2">
@@ -21,13 +39,13 @@ export function AttorneyCard({ attorney }) {
           base={attorney.image}
           alt={attorney.imageAlt}
           variant="portrait"
-          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 45vw, 90vw"
+          sizes="(min-width: 1280px) 20vw, (min-width: 768px) 33vw, 50vw"
           className="portrait-duotone h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-card-overlay" aria-hidden="true" />
 
         {attorney.social.length > 0 && (
-          <ul className="absolute bottom-4 left-1/2 flex -translate-x-1/2 translate-y-4 items-center gap-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
+          <ul className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 translate-y-4 items-center gap-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
             {attorney.social.map((item) => (
               <li key={item.name}>
                 <a
@@ -46,10 +64,109 @@ export function AttorneyCard({ attorney }) {
       </div>
 
       <div className="flex flex-1 flex-col justify-center p-4 text-center sm:p-5">
-        <h3 className="font-display text-xl text-text lg:text-2xl">{attorney.name}</h3>
+        <h3 className="font-display text-xl leading-tight text-text transition-colors group-hover:text-goldSoft lg:text-2xl">
+          {attorney.name}
+        </h3>
         <p className="mt-1.5 text-sm text-muted">{attorney.role}</p>
+        <p className="mt-3 inline-flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-goldSoft">
+          Ver perfil
+          <Icon name="ArrowRight" size={13} />
+        </p>
       </div>
+
+      <button
+        type="button"
+        onClick={() => onOpen(attorney)}
+        className="absolute inset-0 z-10 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+      >
+        <span className="sr-only">Ver el perfil de {attorney.name}</span>
+      </button>
     </article>
+  );
+}
+
+/** Ficha del abogado: formación y áreas en las que trabaja. */
+export function AttorneyModal({ attorney, onClose }) {
+  return (
+    <Modal open={Boolean(attorney)} onClose={onClose} title={attorney?.name} size="lg">
+      {attorney && (
+        <div className="grid gap-8 p-8 sm:grid-cols-[minmax(0,13rem)_1fr] md:p-10">
+          <div className="mx-auto w-40 overflow-hidden rounded-2xl sm:mx-0 sm:w-full">
+            <Photo
+              base={attorney.image}
+              alt={attorney.imageAlt}
+              variant="portrait"
+              sizes="(min-width: 640px) 13rem, 10rem"
+              className="h-full w-full object-cover object-top"
+            />
+          </div>
+
+          <div>
+            <h2 className="font-display text-h3 leading-tight text-text">{attorney.name}</h2>
+            <p className="mt-1.5 text-sm text-goldSoft">{attorney.role}</p>
+
+            {attorney.education.length > 0 && (
+              <>
+                <h3 className="mt-7 text-xs font-semibold uppercase tracking-[0.22em] text-muted">
+                  Formación
+                </h3>
+                <span className="mt-3 block h-px w-12 bg-gold-gradient" aria-hidden="true" />
+                <ul className="mt-4 space-y-2.5">
+                  {attorney.education.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-sm leading-relaxed text-muted">
+                      <Icon name="GraduationCap" size={16} className="mt-0.5 shrink-0 text-gold" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            {attorney.bio?.length > 0 && (
+              <div className="mt-7 border-t border-border pt-6">
+                {attorney.bio.map((paragraph) => (
+                  <p key={paragraph} className="mt-3 text-sm leading-relaxed text-muted first:mt-0">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </Modal>
+  );
+}
+
+/**
+ * Rejilla del equipo. El estado del modal vive aquí y no dentro de la
+ * tarjeta: así solo hay una ficha abierta a la vez.
+ */
+export function AttorneyGrid({ items = attorneys, revealed = false }) {
+  const [selected, setSelected] = useState(null);
+
+  return (
+    <>
+      <div className="flex flex-wrap justify-center gap-6">
+        {items.map((attorney, index) =>
+          revealed ? (
+            <Reveal
+              key={attorney.slug}
+              delay={(index % 5) * 0.08}
+              className={`${CARD_WIDTH} min-w-[9.5rem]`}
+            >
+              <AttorneyCard attorney={attorney} onOpen={setSelected} />
+            </Reveal>
+          ) : (
+            <div key={attorney.slug} className={`${CARD_WIDTH} min-w-[9.5rem]`}>
+              <AttorneyCard attorney={attorney} onOpen={setSelected} />
+            </div>
+          )
+        )}
+      </div>
+
+      <AttorneyModal attorney={selected} onClose={() => setSelected(null)} />
+    </>
   );
 }
 
@@ -70,15 +187,8 @@ export function Attorneys() {
           </Reveal>
         </div>
 
-        {/*
-          Rejilla, no carrusel: el equipo cabe entero en una fila desde `xl`,
-          asi que nadie queda escondido detras de una flecha. En pantallas mas
-          angostas se reparte en dos o tres columnas.
-        */}
-        <div className="mt-14 grid grid-cols-2 gap-5 sm:gap-6 md:grid-cols-3 xl:grid-cols-5">
-          {attorneys.map((attorney) => (
-            <AttorneyCard key={attorney.slug} attorney={attorney} />
-          ))}
+        <div className="mt-14">
+          <AttorneyGrid />
         </div>
       </div>
     </section>

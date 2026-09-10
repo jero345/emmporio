@@ -10,8 +10,10 @@ import { SectionHeading } from '../ui/SectionHeading.jsx';
 /**
  * Resultados y fallos.
  *
- * Las imágenes de las tarjetas son fotos de las instalaciones, nunca los
- * documentos. Los autos y sentencias solo se enlazan en PDF desde el modal.
+ * La imagen de la tarjeta es una ilustración del tipo de proceso, nunca un
+ * documento. Al abrir la ficha se muestra el recorte del apartado resolutivo
+ * de la providencia —con los datos personales tapados—, que es lo único del
+ * expediente que se publica: el PDF completo no se enlaza en ninguna parte.
  */
 export function ResultCard({ result, onOpen, index = 0 }) {
   return (
@@ -49,7 +51,7 @@ export function ResultCard({ result, onOpen, index = 0 }) {
           </p>
 
           <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-goldSoft">
-            Ver el resumen
+            {result.resuelve ? 'Ver el RESUELVE' : 'Ver el resumen'}
             <Icon
               name="ArrowRight"
               size={16}
@@ -74,7 +76,7 @@ export function CaseResults({ items = resultados, showHeading = true, showAll = 
             <SectionHeading
               eyebrow="Resultados y fallos"
               title="Decisiones obtenidas por la firma"
-              text="Una muestra de procesos con resultado favorable. Los documentos que se pueden compartir están enlazados en cada caso."
+              text="Una muestra de procesos con resultado favorable. De cada decisión se muestra el apartado resolutivo, con los datos personales suprimidos."
             />
             {!showAll && (
               <Reveal delay={0.15}>
@@ -97,46 +99,53 @@ export function CaseResults({ items = resultados, showHeading = true, showAll = 
         </p>
       </div>
 
-      <Modal open={Boolean(selected)} onClose={() => setSelected(null)} title={selected?.result}>
+      <Modal
+        open={Boolean(selected)}
+        onClose={() => setSelected(null)}
+        title={selected?.result}
+        size="lg"
+      >
         {selected && (
-          <div className="p-8 md:p-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-goldSoft">
-              {selected.area} · {selected.year}
-            </p>
-            <h2 className="mt-4 font-display text-h3 leading-snug text-text">{selected.result}</h2>
-
-            <dl className="mt-6 grid gap-4 border-y border-border py-6 sm:grid-cols-2">
-              <div>
-                <dt className="text-xs uppercase tracking-[0.18em] text-muted">Tipo de proceso</dt>
-                <dd className="mt-1.5 text-text">{selected.process}</dd>
-              </div>
-              <div>
-                <dt className="text-xs uppercase tracking-[0.18em] text-muted">Despacho</dt>
-                <dd className="mt-1.5 text-text">{selected.court}</dd>
-              </div>
-            </dl>
-
-            <p className="mt-6 leading-relaxed text-muted">{selected.summary}</p>
-
-            {selected.document ? (
-              <Button
-                href={selected.document}
-                target="_blank"
-                rel="noopener noreferrer nofollow"
-                icon="FileText"
-                iconPosition="left"
-                className="mt-8"
-              >
-                Ver el documento en PDF
-              </Button>
-            ) : (
-              <p className="mt-8 text-sm text-muted">
-                El documento de este caso no está disponible para consulta pública.
-              </p>
+          <>
+            {/*
+              El recorte del RESUELVE va primero y sobre fondo claro: es una
+              hoja escaneada, y sobre el fondo oscuro del sitio se leeria peor.
+              Con `overflow-auto` la providencia larga se puede recorrer sin
+              que el modal crezca fuera de la pantalla.
+            */}
+            {selected.resuelve && (
+              <figure className="max-h-[65vh] overflow-auto bg-white">
+                <Photo
+                  base={selected.resuelve}
+                  alt={selected.resuelveAlt}
+                  sizes="(min-width: 1024px) 60vw, 90vw"
+                  className="w-full"
+                />
+              </figure>
             )}
 
-            <p className="mt-6 text-xs leading-relaxed text-muted">{anonymizationNotice}</p>
-          </div>
+            <div className="p-8 md:p-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-goldSoft">
+                {selected.area} · {selected.year}
+              </p>
+              <h2 className="mt-4 font-display text-h3 leading-snug text-text">{selected.result}</h2>
+
+              <dl className="mt-6 grid gap-4 border-y border-border py-6 sm:grid-cols-2">
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.18em] text-muted">Tipo de proceso</dt>
+                  <dd className="mt-1.5 text-text">{selected.process}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs uppercase tracking-[0.18em] text-muted">Despacho</dt>
+                  <dd className="mt-1.5 text-text">{selected.court}</dd>
+                </div>
+              </dl>
+
+              <p className="mt-6 leading-relaxed text-muted">{selected.summary}</p>
+
+              <p className="mt-6 text-xs leading-relaxed text-muted">{anonymizationNotice}</p>
+            </div>
+          </>
         )}
       </Modal>
     </section>

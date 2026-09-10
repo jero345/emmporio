@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react';
 import { siteConfig, whatsappUrl } from '../../data/siteConfig.js';
 import { Icon } from '../ui/Icon.jsx';
 
-/** Botón flotante de WhatsApp (siempre) y de volver arriba (tras 600 px). */
+/**
+ * Botón flotante de WhatsApp (siempre) y de volver arriba (tras 600 px).
+ *
+ * El de WhatsApp va en el verde de la marca y con su propio logo, no en el
+ * dorado del sitio con un icono de chat: es el patrón que la gente reconoce
+ * sin leer nada, que es justo lo que se le pide a un botón flotante.
+ */
 export function FloatingActions() {
   const [showTop, setShowTop] = useState(false);
 
@@ -35,13 +41,13 @@ export function FloatingActions() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Escribir a ${siteConfig.name} por WhatsApp`}
-        className="group relative grid h-14 w-14 place-items-center rounded-full bg-gold text-ink shadow-xl transition-colors hover:bg-goldSoft"
+        className="group relative grid h-16 w-16 place-items-center rounded-full bg-[#25D366] text-white shadow-xl transition-transform duration-200 hover:scale-105"
       >
         <span
           aria-hidden="true"
-          className="absolute inset-0 animate-ping rounded-full bg-gold/40 [animation-duration:2.5s]"
+          className="absolute inset-0 animate-ping rounded-full bg-[#25D366]/40 [animation-duration:2.5s]"
         />
-        <Icon name="MessageCircle" size={26} className="relative" />
+        <Icon name="WhatsApp" size={38} className="relative" />
       </a>
     </div>
   );

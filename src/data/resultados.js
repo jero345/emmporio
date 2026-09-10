@@ -1,17 +1,21 @@
 /**
  * Resultados y fallos favorables.
  *
- * Regla de la sección: los autos y sentencias NUNCA se muestran como imagen
- * ni se indexan. Viven en `public/documentos/` (bloqueado en robots.txt) y
- * solo se enlazan desde aquí, cuando el campo `document` está presente.
+ * Regla de la sección: la providencia completa NUNCA se publica ni se enlaza.
+ * De cada decisión se muestra únicamente el recorte del apartado resolutivo
+ * («RESUELVE»). Esos recortes los genera `npm run assets` desde
+ * `AUTOS Y SENTENCIAS/`, que se queda fuera del repositorio; el campo
+ * `resuelve` guarda la ruta base, sin sufijo de ancho ni extensión.
+ *
+ * Qué se tapa y qué no lo decide `scripts/resuelve.mjs`, caso por caso: hoy
+ * solo el auto de libertad lleva datos suprimidos.
  *
  * Las imágenes de las tarjetas son ilustraciones de cada tipo de proceso. No
  * son documentos del expediente: los papeles que aparecen en ellas son parte
  * de la ilustración y no reproducen ninguna actuación judicial real.
  *
- * TODO: reemplazar con contenido real del cliente. Los tres documentos
- * enlazados provienen de la carpeta `AUTOS Y SENTENCIAS`; hay que confirmar
- * juzgado, año y redacción del resumen antes de publicar.
+ * TODO: reemplazar con contenido real del cliente. Hay que confirmar juzgado,
+ * año y redacción del resumen antes de publicar.
  */
 
 export const resultados = [
@@ -27,7 +31,8 @@ export const resultados = [
       'Ilustración de una sala de audiencias: un procesado celebra tras conocer una sentencia absolutoria',
     summary:
       'La Fiscalía sostuvo la acusación durante todo el juicio oral. La defensa concentró su trabajo en la contradicción de la prueba testimonial y en demostrar la ausencia de elementos materiales que vincularan a nuestro cliente con los hechos. El juzgado absolvió y ordenó la libertad inmediata.',
-    document: '/documentos/sentencia-absolutoria-2023.pdf',
+    resuelve: '/assets/resuelve/absolucion-proceso-penal',
+    resuelveAlt: 'Apartado resolutivo de la sentencia absolutoria',
   },
   {
     id: 'libertad-vencimiento-terminos',
@@ -41,7 +46,9 @@ export const resultados = [
       'Ilustración de una persona que recupera su libertad acompañada por su abogado, junto a un auto de libertad concedida',
     summary:
       'Se acreditó ante el juez de control de garantías que la audiencia de juicio oral no se había iniciado dentro del término legal, sin que la demora fuera atribuible a la defensa. El juzgado concedió la libertad de nuestro representado.',
-    document: '/documentos/libertad-por-vencimiento-de-terminos.pdf',
+    resuelve: '/assets/resuelve/libertad-vencimiento-terminos',
+    resuelveAlt:
+      'Casilla de la decisión del acta de audiencia en la que se revoca la decisión revisada, con los datos del procesado tapados',
   },
   {
     id: 'sentencia-favorable-penal',
@@ -55,7 +62,8 @@ export const resultados = [
       'Ilustración de un abogado y su clienta celebrando un fallo favorable ante el juez',
     summary:
       'Defensa técnica sostenida durante todas las etapas del proceso, con resultado favorable para el procesado.',
-    document: '/documentos/sentencia-favorable-proceso-penal.pdf',
+    resuelve: '/assets/resuelve/sentencia-favorable-penal',
+    resuelveAlt: 'Apartado resolutivo de la decisión de la Sala de Casación Penal',
   },
   {
     id: 'reintegro-laboral',
@@ -69,7 +77,7 @@ export const resultados = [
       'Ilustración de la entrega de una carta de terminación del contrato sobre el escritorio de un abogado laboralista',
     summary:
       'La empresa terminó el contrato de una trabajadora amparada por estabilidad laboral reforzada sin autorización del inspector de trabajo. Se obtuvo la declaratoria de ineficacia del despido, el reintegro y el pago de los salarios y prestaciones dejados de percibir.',
-    document: null, // TODO: adjuntar el fallo anonimizado
+    resuelve: null, // TODO: recorte del RESUELVE, cuando el cliente lo entregue
   },
   {
     id: 'restitucion-inmueble',
@@ -83,7 +91,7 @@ export const resultados = [
       'Ilustración de la entrega de las llaves de un inmueble junto al acta de entrega y el código civil',
     summary:
       'Tras más de un año de mora, se logró la entrega del inmueble en la primera audiencia y la condena en costas, evitando al propietario un proceso ejecutivo paralelo.',
-    document: null, // TODO
+    resuelve: null, // TODO: recorte del RESUELVE, cuando el cliente lo entregue
   },
   {
     id: 'custodia-alimentos',
@@ -97,9 +105,9 @@ export const resultados = [
       'Ilustración de una madre abrazando a su hija junto a una sentencia de custodia',
     summary:
       'Se acreditó ante el juzgado que el entorno propuesto por nuestra representada garantizaba mejor el interés superior de los menores. Se fijó además una cuota alimentaria acorde con la capacidad económica real del alimentante.',
-    document: null, // TODO
+    resuelve: null, // TODO: recorte del RESUELVE, cuando el cliente lo entregue
   },
 ];
 
 export const anonymizationNotice =
-  'Los documentos publicados se encuentran anonimizados conforme a la normativa de protección de datos personales.';
+  'De cada decisión se publica únicamente el apartado resolutivo; las providencias completas no se publican.';

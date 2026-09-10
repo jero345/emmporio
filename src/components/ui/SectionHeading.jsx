@@ -12,6 +12,9 @@ export function SectionHeading({
   as: Heading = 'h2',
   light = false,
   className = '',
+  // Tamaño del titular. Por defecto el `text-h2` de todas las secciones; se
+  // baja donde el salto con el texto de al lado resulta demasiado marcado.
+  titleClassName = 'text-h2',
   children,
 }) {
   const centered = align === 'center';
@@ -38,7 +41,8 @@ export function SectionHeading({
 
       <Heading
         className={[
-          'mt-5 text-h2 text-balance',
+          'mt-5 text-balance',
+          titleClassName,
           light ? 'text-ink' : 'text-text',
         ].join(' ')}
       >

@@ -1,10 +1,8 @@
 import { Seo } from '../components/Seo.jsx';
 import { PageHero } from '../components/sections/PageHero.jsx';
-import { AttorneyCard } from '../components/sections/Attorneys.jsx';
+import { AttorneyGrid } from '../components/sections/Attorneys.jsx';
 import { ContactCTA } from '../components/sections/ContactCTA.jsx';
-import { Reveal } from '../components/ui/Reveal.jsx';
 
-import { attorneys } from '../data/attorneys.js';
 import { breadcrumbSchema } from '../lib/seo.js';
 
 export default function Abogados() {
@@ -35,12 +33,8 @@ export default function Abogados() {
       />
 
       <section className="section">
-        <div className="container-site grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {attorneys.map((attorney, index) => (
-            <Reveal key={attorney.slug} delay={(index % 5) * 0.08} className="h-full">
-              <AttorneyCard attorney={attorney} />
-            </Reveal>
-          ))}
+        <div className="container-site">
+          <AttorneyGrid revealed />
         </div>
       </section>
 

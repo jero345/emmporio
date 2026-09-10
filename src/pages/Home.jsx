@@ -1,5 +1,6 @@
 import { Seo } from '../components/Seo.jsx';
 import { Hero } from '../components/sections/Hero.jsx';
+import { Urgencias24h } from '../components/sections/Urgencias24h.jsx';
 import { Manifiesto } from '../components/sections/Manifiesto.jsx';
 import { About } from '../components/sections/About.jsx';
 import { PracticeAreas } from '../components/sections/PracticeAreas.jsx';
@@ -10,7 +11,6 @@ import { Marquee } from '../components/sections/Marquee.jsx';
 import { Prensa } from '../components/sections/Prensa.jsx';
 import { Testimonials } from '../components/sections/Testimonials.jsx';
 import { CaseResults } from '../components/sections/CaseResults.jsx';
-import { CasosNotables } from '../components/sections/CasosNotables.jsx';
 import { Attorneys } from '../components/sections/Attorneys.jsx';
 import { ContactCTA } from '../components/sections/ContactCTA.jsx';
 import { FAQ } from '../components/sections/FAQ.jsx';
@@ -33,6 +33,7 @@ export default function Home() {
       />
 
       <Hero />
+      <Urgencias24h />
       <Manifiesto />
       <About />
       <PracticeAreas />
@@ -43,7 +44,6 @@ export default function Home() {
       <Prensa />
       <Testimonials />
       <CaseResults />
-      <CasosNotables />
       <Attorneys />
       <ContactCTA />
       <FAQ />

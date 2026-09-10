@@ -1,28 +1,28 @@
-import { useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 
 import { Seo } from '../components/Seo.jsx';
 import { PageHero } from '../components/sections/PageHero.jsx';
-import { ResultCard } from '../components/sections/CaseResults.jsx';
 import { LeadForm } from '../components/sections/LeadForm.jsx';
 import { Icon } from '../components/ui/Icon.jsx';
-import { Modal } from '../components/ui/Modal.jsx';
 import { Photo } from '../components/ui/Photo.jsx';
 import { Reveal } from '../components/ui/Reveal.jsx';
 
 import { getPracticeArea, practiceAreas } from '../data/practiceAreas.js';
-import { anonymizationNotice, resultados } from '../data/resultados.js';
 import { breadcrumbSchema } from '../lib/seo.js';
 
-/** Plantilla única de detalle de área, alimentada por `practiceAreas.js`. */
+/**
+ * Plantilla única de detalle de área, alimentada por `practiceAreas.js`.
+ *
+ * La página explica en qué consiste el área, qué servicios presta la firma y
+ * qué asuntos se atienden. Los resultados NO van aquí: viven todos juntos en
+ * «Casos y resultados», para no repetir la misma información en once páginas.
+ */
 export default function AreaDetalle() {
   const { slug } = useParams();
   const area = getPracticeArea(slug);
-  const [selected, setSelected] = useState(null);
 
   if (!area) return <Navigate to="/404" replace />;
 
-  const cases = resultados.filter((result) => result.area === area.title);
   const others = practiceAreas.filter((item) => item.slug !== area.slug);
 
   const breadcrumbs = [
@@ -87,20 +87,6 @@ export default function AreaDetalle() {
               </ul>
             </Reveal>
 
-            {cases.length > 0 && (
-              <Reveal delay={0.2} className="mt-16">
-                <h2 className="font-display text-h2 text-text">Resultados en esta área</h2>
-                <span className="mt-4 block h-px w-16 bg-gold-gradient" aria-hidden="true" />
-                <div className="mt-8 grid gap-6 sm:grid-cols-2">
-                  {cases.slice(0, 4).map((result, index) => (
-                    <ResultCard key={result.id} result={result} index={index} onOpen={setSelected} />
-                  ))}
-                </div>
-                <p className="mt-8 border-l-2 border-gold/40 pl-4 text-sm leading-relaxed text-muted">
-                  {anonymizationNotice}
-                </p>
-              </Reveal>
-            )}
           </div>
 
           <aside className="space-y-8 lg:sticky lg:top-28 lg:self-start">
@@ -134,29 +120,6 @@ export default function AreaDetalle() {
         </div>
       </section>
 
-      <Modal open={Boolean(selected)} onClose={() => setSelected(null)} title={selected?.result}>
-        {selected && (
-          <div className="p-8 md:p-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-goldSoft">
-              {selected.area} · {selected.year}
-            </p>
-            <h2 className="mt-4 font-display text-h3 leading-snug text-text">{selected.result}</h2>
-            <p className="mt-6 leading-relaxed text-muted">{selected.summary}</p>
-            {selected.document && (
-              <a
-                href={selected.document}
-                target="_blank"
-                rel="noopener noreferrer nofollow"
-                className="mt-8 inline-flex items-center gap-2.5 rounded-xl bg-gold px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-goldSoft"
-              >
-                <Icon name="FileText" size={18} />
-                Ver el documento en PDF
-              </a>
-            )}
-            <p className="mt-6 text-xs leading-relaxed text-muted">{anonymizationNotice}</p>
-          </div>
-        )}
-      </Modal>
     </>
   );
 }

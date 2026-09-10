@@ -52,11 +52,20 @@ export function About() {
         </Reveal>
 
         <div>
-          <SectionHeading eyebrow={aboutSection.eyebrow} title={aboutSection.title} />
+          {/*
+            El titular va un escalón por debajo del `text-h2` de las demás
+            secciones y los dos párrafos comparten tamaño: el cliente pidió
+            que este bloque se lea parejo, sin saltos fuertes de tipografía.
+          */}
+          <SectionHeading
+            eyebrow={aboutSection.eyebrow}
+            title={aboutSection.title}
+            titleClassName="text-h3 sm:text-[2rem] sm:leading-[1.18]"
+          />
 
           <Reveal delay={0.1}>
-            <p className="mt-6 text-lg leading-relaxed text-text">{aboutSection.lead}</p>
-            <p className="mt-4 leading-relaxed text-muted">{aboutSection.body}</p>
+            <p className="mt-6 leading-relaxed text-text">{aboutSection.lead}</p>
+            <p className="mt-4 leading-relaxed text-text/75">{aboutSection.body}</p>
           </Reveal>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2">

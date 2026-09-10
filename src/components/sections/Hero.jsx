@@ -96,18 +96,25 @@ export function Hero() {
               />
 
               <div className="container-site relative flex h-full items-center">
-                <div className="max-w-2xl py-20">
+                <div className={slide.wide ? 'max-w-4xl py-20' : 'max-w-2xl py-20'}>
                   <p className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.25em] text-goldSoft">
                     <span className="h-px w-10 bg-gold-gradient" aria-hidden="true" />
                     {slide.eyebrow}
                   </p>
 
-                  <Title className="mt-6 font-display text-h1 text-balance">
+                  <Title
+                    className={[
+                      'mt-6 font-display text-balance',
+                      slide.titleClassName || 'text-h1',
+                    ].join(' ')}
+                  >
                     <span className="block">{slide.titleTop}</span>
                     <span className="block text-goldSoft">{slide.titleBottom}</span>
                   </Title>
 
-                  <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{slide.text}</p>
+                  {slide.text && (
+                    <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{slide.text}</p>
+                  )}
 
                   <div className="mt-9 flex flex-wrap items-center gap-4">
                     <Button to="/contacto" size="lg" icon="ArrowRight">

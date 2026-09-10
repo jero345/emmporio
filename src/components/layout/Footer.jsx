@@ -34,7 +34,8 @@ export function Footer() {
       <div className="container-site relative py-16 md:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
           <div>
-            <Logo height={46} />
+            {/* El logo del pie va grande: es el cierre de la página. */}
+            <Logo height={64} heightClass="h-16 sm:h-20 lg:h-24" />
             <p className="mt-6 max-w-sm leading-relaxed text-muted">{siteConfig.description}</p>
 
             <ul className="mt-7 space-y-2 text-sm text-muted">

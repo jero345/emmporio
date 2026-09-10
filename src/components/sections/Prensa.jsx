@@ -20,14 +20,20 @@ const formatDate = (value) =>
 const CARD =
   'group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-border bg-surface text-left transition-colors duration-300 hover:border-gold';
 
-/** Miniatura con badge de reproducción, para los ítems que son video. */
+/**
+ * Miniatura con badge de reproducción, para los ítems que son video.
+ *
+ * Si el ítem trae `poster` propio se usa ese, aunque sea un video de YouTube:
+ * la portada que sirve YouTube viene con su propio tratamiento y no siempre
+ * es la que la firma quiere mostrar.
+ */
 function VideoThumb({ item }) {
   const thumbClasses =
     'h-full w-full object-cover transition-transform duration-700 group-hover:scale-105';
 
   return (
     <div className="relative aspect-video overflow-hidden">
-      {item.youtubeId ? (
+      {item.youtubeId && !item.poster ? (
         // La portada la sirve YouTube. Si el video no tiene versión en alta
         // resolución, se cae a `hqdefault`, que existe siempre.
         <img
@@ -52,8 +58,10 @@ function VideoThumb({ item }) {
           className={thumbClasses}
         />
       )}
+      {/* Velo muy leve: solo lo justo para que el botón de play despegue de
+          la fotografía sin apagarle el color a la portada. */}
       <span
-        className="absolute inset-0 bg-base/40 transition-colors group-hover:bg-base/25"
+        className="absolute inset-0 bg-base/15 transition-colors group-hover:bg-base/5"
         aria-hidden="true"
       />
       <span
@@ -85,9 +93,23 @@ function CardBody({ item, action }) {
         {item.outlet}
       </span>
 
-      <span className="mt-3 block flex-1 font-display text-lg leading-snug text-text transition-colors group-hover:text-goldSoft">
+      {/*
+        El `flex-1` se lo lleva el último bloque de texto de la tarjeta: así el
+        enlace de abajo queda alineado entre tarjetas y no aparece un hueco
+        entre el titular y el resumen.
+      */}
+      <span
+        className={[
+          'mt-3 block font-display text-lg leading-snug text-text transition-colors group-hover:text-goldSoft',
+          item.summary ? '' : 'flex-1',
+        ].join(' ')}
+      >
         {item.headline}
       </span>
+
+      {item.summary && (
+        <span className="mt-3 block flex-1 text-sm leading-relaxed text-muted">{item.summary}</span>
+      )}
 
       {formatDate(item.date) && (
         <span className="mt-3 block text-sm text-muted">{formatDate(item.date)}</span>
@@ -120,10 +142,10 @@ export function Prensa() {
     <section className="section border-y border-border bg-surface/40">
       <div className="container-site">
         <SectionHeading
-          eyebrow="En los medios"
+          eyebrow="Medios y casos"
           title="La firma en la prensa"
           align="center"
-          text="Entrevistas y cubrimientos en los que ha participado el equipo de la firma."
+          text="Entrevistas, cubrimientos y procesos de la firma que tuvieron repercusión pública, contados sin exponer la identidad de quienes confiaron su defensa."
         />
 
         {/*
@@ -154,27 +176,36 @@ export function Prensa() {
                     <div className="aspect-video overflow-hidden">
                       <Photo
                         base={item.image}
-                        alt={`Recorte de prensa: ${item.headline}`}
+                        alt={item.imageAlt || `Recorte de prensa: ${item.headline}`}
                         sizes="(min-width: 1024px) 30vw, 90vw"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     </div>
                   )}
-                  <CardBody item={item} action={{ label: 'Leer la nota', icon: 'ExternalLink' }} />
+                  <CardBody item={item} action={{ label: 'Ver el caso', icon: 'ExternalLink' }} />
                 </a>
               ) : item.image ? (
                 <button type="button" onClick={() => setModalItem(item)} className={CARD}>
-                  <div className="aspect-video overflow-hidden">
+                  <div className="relative aspect-video overflow-hidden">
                     <Photo
                       base={item.image}
-                      alt={`Recorte de prensa: ${item.headline}`}
+                      alt={item.imageAlt || `Recorte de prensa: ${item.headline}`}
                       sizes="(min-width: 1024px) 30vw, 90vw"
                       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
+                    {item.duration && (
+                      <span className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-base/85 px-3 py-1 text-xs font-semibold text-text">
+                        <Icon name="Play" size={12} className="fill-current text-gold" />
+                        {item.duration}
+                      </span>
+                    )}
                   </div>
                   <CardBody
                     item={item}
-                    action={{ label: 'Ver el recorte', icon: 'ArrowUpRight' }}
+                    action={{
+                      label: item.body ? 'Ver el caso' : 'Ampliar',
+                      icon: 'ArrowUpRight',
+                    }}
                   />
                 </button>
               ) : (
@@ -239,18 +270,45 @@ export function Prensa() {
           </>
         ) : (
           modalItem && (
+            /*
+              La pieza gráfica va arriba pero con el alto acotado: sin ese
+              tope se comía media pantalla y el relato quedaba fuera de
+              cuadro. `contain` sobre el fondo del sitio porque lleva el
+              titular incrustado y recortarla se lo comería.
+            */
             <figure>
-              <Photo
-                base={modalItem.image}
-                alt={`Recorte de prensa: ${modalItem.headline}`}
-                sizes="90vw"
-                className="w-full"
-              />
-              <figcaption className="border-t border-border p-6">
+              <div className="flex items-center justify-center bg-base">
+                <Photo
+                  base={modalItem.image}
+                  alt={modalItem.imageAlt || `Recorte de prensa: ${modalItem.headline}`}
+                  sizes="(min-width: 768px) 55vw, 90vw"
+                  ratio={16 / 10}
+                  className="max-h-[30vh] w-full object-contain md:max-h-[34vh]"
+                />
+              </div>
+
+              {/* `pr-14` en el titular: deja libre la esquina del botón de
+                  cerrar, que flota sobre esta columna. */}
+              <figcaption className="border-t border-border p-6 pr-14 md:p-8 md:pr-16">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-goldSoft">
                   {modalItem.outlet}
                 </p>
-                <p className="mt-2 font-display text-lg text-text">{modalItem.headline}</p>
+                <p className="mt-2 font-display text-h3 leading-snug text-text">
+                  {modalItem.headline}
+                </p>
+
+                {modalItem.body?.length > 0 && (
+                  <div className="mt-5 border-t border-border pt-5 md:columns-2 md:gap-8">
+                    {modalItem.body.map((paragraph) => (
+                      <p
+                        key={paragraph}
+                        className="mb-4 break-inside-avoid text-sm leading-relaxed text-muted last:mb-0"
+                      >
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </figcaption>
             </figure>
           )

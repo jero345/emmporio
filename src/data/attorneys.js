@@ -5,7 +5,11 @@
  * (retrato 3:4, dos anchos). La ruta se escribe SIN sufijo de ancho ni
  * extensión: el componente arma el `srcset` con `-600.webp` y `-1200.webp`.
  *
- * Los nombres y los cargos son los que confirmó el cliente.
+ * Los nombres y los cargos son los que confirmó el cliente. Los dos socios
+ * llevan el tratamiento «Dr./Dra.» delante, tal como los pidió.
+ *
+ * `education` alimenta la ficha que se abre al pulsar la tarjeta; si está
+ * vacío, la ficha muestra el resto del perfil sin el bloque de formación.
  * Mientras el cliente no confirme un correo individual por persona, el
  * enlace de cada tarjeta apunta al correo general de la firma: es preferible
  * a mandar a un buzón que no existe.
@@ -20,7 +24,7 @@ import { siteConfig } from './siteConfig.js';
 export const attorneys = [
   {
     slug: 'edward-becerra',
-    name: 'Edward Jeferson Becerra Cossio',
+    name: 'Dr. Edward Jeferson Becerra Cossio',
     role: 'Socio fundador',
     specialty: 'Derecho Penal',
     image: '/assets/equipo/edward-becerra',
@@ -31,12 +35,15 @@ export const attorneys = [
     phone: '+57 604 322 2136', // TODO: extensión directa, si la tiene
     areas: ['derecho-penal', 'extincion-de-dominio'],
     bio: [
-      'Fundó Emmporio Jurídico en 2010 con una idea simple: que una defensa seria no puede depender del tamaño del bolsillo del cliente. Desde entonces dirige la estrategia de los procesos penales de la firma.',
-      'Ha llevado casos de libertad por vencimiento de términos, absoluciones en juicio oral y representación de víctimas en incidentes de reparación integral.',
+      'Fundó la firma bajo una convicción inquebrantable: el litigio de alto nivel exige preparación rigurosa, formación permanente, ética y pasión para transformar la estrategia jurídica en resultados exitosos.',
     ],
     education: [
-      'Abogado', // TODO: universidad y posgrados reales
-      'Especialista en Derecho Penal y Criminología',
+      'Abogado — CUR',
+      'Especialista en Derecho Procesal Penal — UNAULA',
+      'Magíster en Derecho Procesal Penal y Teoría del Delito — UNAULA',
+      'Profesional en Criminalística — Tecnológico de Antioquia (TdeA)',
+      'Médico Veterinario — Universidad de Antioquia (UdeA)',
+      'Conciliador en Derecho',
     ],
     // TODO: agregar el LinkedIn personal si lo tiene:
     // { name: 'LinkedIn', href: 'https://www.linkedin.com/in/…', icon: 'Linkedin' }
@@ -44,7 +51,7 @@ export const attorneys = [
   },
   {
     slug: 'diana-eusse',
-    name: 'Diana Patricia Eusse Arenas',
+    name: 'Dra. Diana Patricia Eusse Arenas',
     role: 'Socia fundadora',
     specialty: 'Derecho de Familia',
     image: '/assets/equipo/diana-eusse',
@@ -59,8 +66,11 @@ export const attorneys = [
       'Lidera además la relación con los clientes corporativos que requieren acompañamiento permanente.',
     ],
     education: [
-      'Abogada', // TODO: universidad y posgrados reales
-      'Especialista en Derecho de Familia',
+      'Abogada — Universidad de Antioquia (UdeA)',
+      'Especialista en Derecho Procesal Penal — UNAULA',
+      'Magíster en Derecho Procesal Penal y Teoría del Delito — UNAULA',
+      'Especialista en Derecho Constitucional — Universidad de Antioquia (UdeA)',
+      'Conciliadora en Derecho',
     ],
     // TODO: agregar el LinkedIn personal si lo tiene.
     social: [{ name: 'Correo', href: `mailto:${siteConfig.email}`, icon: 'Mail' }],
@@ -80,7 +90,7 @@ export const attorneys = [
     bio: [
       'Atiende las reclamaciones laborales de la firma, desde liquidaciones mal calculadas hasta procesos de estabilidad laboral reforzada.',
     ],
-    education: ['Abogada'], // TODO
+    education: [], // TODO: formación, cuando el cliente la confirme
     // TODO: agregar el LinkedIn personal si lo tiene.
     social: [{ name: 'Correo', href: `mailto:${siteConfig.email}`, icon: 'Mail' }],
   },
@@ -99,7 +109,7 @@ export const attorneys = [
     bio: [
       'Apoya los procesos civiles y ejecutivos de la firma y se encarga del estudio de títulos en las operaciones inmobiliarias.',
     ],
-    education: ['Abogado'], // TODO
+    education: [], // TODO: formación, cuando el cliente la confirme
     // TODO: agregar el LinkedIn personal si lo tiene.
     social: [{ name: 'Correo', href: `mailto:${siteConfig.email}`, icon: 'Mail' }],
   },
@@ -118,7 +128,7 @@ export const attorneys = [
     bio: [
       'Acompaña los procesos policivos y de tránsito de la firma y hace el seguimiento de términos y actuaciones en cada expediente.',
     ],
-    education: ['Abogada'], // TODO
+    education: [], // TODO: formación, cuando el cliente la confirme
     // TODO: agregar el LinkedIn personal si lo tiene.
     social: [{ name: 'Correo', href: `mailto:${siteConfig.email}`, icon: 'Mail' }],
   },

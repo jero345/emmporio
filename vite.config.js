@@ -11,7 +11,7 @@ export default defineConfig({
       dynamicRoutes: routePaths,
       exclude: ['/404'],
       // Los autos y sentencias nunca se indexan.
-      robots: [{ userAgent: '*', allow: '/', disallow: ['/documentos/'] }],
+      robots: [{ userAgent: '*', allow: '/' }],
     }),
   ],
   build: {

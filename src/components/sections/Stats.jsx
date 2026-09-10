@@ -6,6 +6,11 @@ import { ProgressBar } from '../ui/ProgressBar.jsx';
 /** Indicadores y cifras de la firma sobre fotografía de las instalaciones. */
 export function Stats() {
   const hasMetrics = stats.metrics?.length > 0;
+  // Los contadores son opcionales: si el array queda vacío no se pinta la
+  // rejilla ni la línea que la separa de los indicadores.
+  const hasItems = stats.items?.length > 0;
+
+  if (!hasMetrics && !hasItems) return null;
 
   return (
     <section aria-label="La firma en cifras" className="relative overflow-hidden">
@@ -35,23 +40,25 @@ export function Stats() {
         )}
 
         {/* La línea de separación solo aparece si arriba hay indicadores. */}
-        <div
-          className={[
-            'grid gap-10 sm:grid-cols-2 lg:grid-cols-4',
-            hasMetrics ? 'mt-16 border-t border-border pt-14' : '',
-          ].join(' ')}
-        >
-          {stats.items.map((item) => (
-            <Counter
-              key={item.id}
-              value={item.value}
-              suffix={item.suffix}
-              max={item.max}
-              won={item.won}
-              label={item.label}
-            />
-          ))}
-        </div>
+        {hasItems && (
+          <div
+            className={[
+              'grid gap-10 sm:grid-cols-2 lg:grid-cols-4',
+              hasMetrics ? 'mt-16 border-t border-border pt-14' : '',
+            ].join(' ')}
+          >
+            {stats.items.map((item) => (
+              <Counter
+                key={item.id}
+                value={item.value}
+                suffix={item.suffix}
+                max={item.max}
+                won={item.won}
+                label={item.label}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

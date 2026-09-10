@@ -77,7 +77,7 @@ export function Modal({ open, onClose, title, children, size = 'md' }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[90] grid place-items-center bg-base/85 p-4 backdrop-blur-sm md:p-8"
+          className="fixed inset-0 z-[90] grid place-items-center overflow-y-auto bg-base/85 p-4 backdrop-blur-sm md:p-8"
           onClick={(event) => {
             if (event.target === event.currentTarget) onClose();
           }}
@@ -91,7 +91,13 @@ export function Modal({ open, onClose, title, children, size = 'md' }) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.97, y: 12 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-            className={`relative w-full ${widths[size] || widths.md} overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl`}
+            /*
+             * `max-h` + `flex-col`: el diálogo nunca pasa del alto de la
+             * pantalla y es el contenido el que se desplaza. Sin esto, una
+             * ficha larga se cortaba por abajo sin dejar forma de leerla,
+             * porque el contenedor recortaba lo que sobraba.
+             */
+            className={`relative flex max-h-[92dvh] w-full flex-col ${widths[size] || widths.md} overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl`}
           >
             <button
               type="button"
@@ -101,7 +107,7 @@ export function Modal({ open, onClose, title, children, size = 'md' }) {
             >
               <Icon name="X" size={18} />
             </button>
-            {children}
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">{children}</div>
           </motion.div>
         </motion.div>
       )}

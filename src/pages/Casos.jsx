@@ -31,7 +31,7 @@ export default function Casos() {
       <PageHero
         eyebrow="Resultados"
         title="Casos y fallos favorables"
-        text="Una muestra de procesos con resultado favorable. Los documentos que se pueden compartir están enlazados en cada caso, anonimizados."
+        text="Una muestra de procesos con resultado favorable. De cada decisión se publica únicamente el apartado resolutivo, con los datos personales suprimidos."
         image="/assets/instalaciones/sala-juntas-diplomas"
         imageAlt="Sala de juntas de Emmporio Jurídico con los reconocimientos de la firma"
         breadcrumbs={[

@@ -10,12 +10,16 @@ export const heroSlides = [
   {
     id: 'h1',
     eyebrow: 'Abogados · desde 2010',
-    titleTop: 'Su mejor',
-    titleBottom: 'defensa',
-    // La frase de la firma («estamos hechos para lo difícil…») ya no va aquí:
-    // vive completa en la franja de `manifiesto`, justo debajo del hero. Este
-    // slide dice qué hace la firma para que no se lean dos veces lo mismo.
-    text: 'Defendemos a personas y empresas en once áreas del derecho, de lo penal y lo civil a lo laboral y la seguridad social. Desde nuestras oficinas en el centro de Medellín.',
+    // La frase de la firma es el titular del primer slide. Va partida en dos
+    // como los demás: la segunda línea se pinta en dorado.
+    titleTop: 'Estamos hechos para lo difícil',
+    titleBottom: 'y preparados para lo imposible',
+    // Titular largo: baja un punto respecto al `text-h1` de los demás slides
+    // y el bloque se ensancha, para que cada mitad de la frase quepa en una
+    // línea desde tablet en adelante.
+    titleClassName: 'text-[clamp(1.65rem,3.5vw,3rem)] leading-[1.12]',
+    wide: true,
+    // Sin párrafo: este slide se queda en el titular y los botones.
     image: '/assets/instalaciones/recepcion-logo',
     imageAlt: 'Recepción de Emmporio Jurídico con el logotipo iluminado',
     // Retrato opcional: se monta como figura en la columna derecha, sobre la
@@ -51,23 +55,25 @@ export const heroSlides = [
 ];
 
 /**
- * Declaración de la firma, tal como la entregó el cliente. Va en una franja
- * propia justo debajo del hero, no dentro del slider: el slider rota cada
- * siete segundos y esta frase tiene que quedarse quieta.
+ * Declaración de la firma, tal como la entregó el cliente.
+ *
+ * La apertura («estamos hechos para lo difícil y preparados para lo
+ * imposible») ya no está aquí: encabeza la franja de urgencias penales, que
+ * va justo encima. Repetirla dos veces seguidas la desgastaba.
  *
  * El cierre lleva la marca con las dos emes; el original del cliente traía
  * «Emporio» en esa última línea.
  */
 export const manifiesto = {
-  lead: 'En Emmporio Jurídico estamos hechos para lo difícil y preparados para lo imposible.',
-  body: 'Asumimos los casos que otros no quieren enfrentar, con estrategia, experiencia y determinación. Cuando el desafío es mayor, nuestra defensa también lo es.',
+  lead: 'Asumimos los casos que otros no quieren enfrentar, con estrategia, experiencia y determinación.',
+  body: 'Cuando el desafío es mayor, nuestra defensa también lo es.',
   signature: 'Emmporio Jurídico: su mejor defensa',
 };
 
 export const aboutSection = {
   eyebrow: 'Sobre la firma',
   title: 'Una firma construida caso a caso',
-  lead: 'Emmporio Jurídico nació en 2010 en Medellín y hoy acompaña a personas y empresas en once áreas del derecho, de lo penal y lo civil a lo administrativo, lo laboral y la seguridad social.',
+  lead: 'Emmporio Jurídico nació en 2010 en Medellín y desde entonces defiende a personas y empresas que atraviesan el momento más difícil de su vida.',
   body: 'No trabajamos con expedientes anónimos. Cada caso tiene un abogado responsable con nombre propio, un plan de trabajo escrito y un cliente que sabe en todo momento en qué va su proceso. Esa es, en la práctica, nuestra manera de entender el "su mejor defensa" que acompaña al logo desde el primer día.',
   images: [
     {
@@ -145,16 +151,10 @@ export const stats = {
     src: '/assets/instalaciones/recepcion-logo-lateral',
     alt: 'Recepción de las oficinas de Emmporio Jurídico',
   },
-  // `max` es la escala de la barra de cada cifra: define hasta dónde se llena
-  // (850 sobre 1000 = 85 %). No se muestra, solo da la proporción.
-  items: [
-    // `won` parte la barra en dos: lo atendido y, dentro, lo ganado.
-    // TODO: confirmar cuántos de los casos atendidos terminaron a favor.
-    { id: 's1', value: 850, max: 1000, suffix: '+', label: 'Casos atendidos', won: 780 },
-    { id: 's2', value: 700, max: 1000, suffix: '+', label: 'Clientes acompañados' },
-    { id: 's3', value: 5, max: 8, suffix: '', label: 'Profesionales en el equipo' },
-    { id: 's4', value: yearsOfExperience, max: 35, suffix: '', label: 'Años de experiencia' },
-  ],
+  // Los contadores de casos atendidos, clientes, tamaño del equipo y años de
+  // experiencia se retiraron a pedido del cliente. La sección funciona sin
+  // ellos: si algún día vuelven, basta con volver a llenar este array.
+  items: [],
 
   // Indicadores en porcentaje. Van arriba de las barras de cifras.
   // TODO: reemplazar por indicadores reales y verificables de la firma. No
@@ -163,7 +163,7 @@ export const stats = {
   metrics: [
     {
       id: 'm1',
-      value: 92,
+      value: 96,
       label: 'Resultados favorables',
       description:
         'Casos que terminaron en absolución, preclusión o acuerdo favorable al cliente.',
