@@ -1,0 +1,57 @@
+# Configuracion del servidor (Hostinger / Apache).
+#
+# El sitio se publica como archivos estaticos: cada pagina existe ya armada en
+# su propia carpeta (/nosotros/index.html, /contacto/index.html...), asi que
+# aqui no hay que redirigir todo a la portada como en una aplicacion normal
+# de una sola pagina.
+
+# ---------------------------------------------------------------- direccion
+# Una sola direccion buena. Sin esto, el sitio responde igual en http, en
+# https y con www delante, y un buscador lo cuenta como paginas repetidas y
+# reparte entre ellas el peso de la que deberia posicionar.
+RewriteEngine On
+
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://emmporiojuridico.com/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^www\.emmporiojuridico\.com$ [NC]
+RewriteRule ^(.*)$ https://emmporiojuridico.com/$1 [R=301,L]
+
+# ------------------------------------------------------------------ paginas
+# `/nosotros` sirve `/nosotros/index.html` directamente, sin rebotar antes a
+# `/nosotros/`. Ese rebote sobra y ademas dejaria la direccion con una barra
+# al final, distinta de la que el sitio declara como buena.
+DirectorySlash Off
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.*[^/])$ /$1/index.html [L]
+
+# Pagina de error propia. Importante que sea un 404 de verdad: una direccion
+# inexistente que respondiera "todo bien" se queda dando vueltas en Google.
+ErrorDocument 404 /404.html
+
+# ------------------------------------------------------------------- cache
+# Las imagenes y el CSS/JS llevan huella en el nombre o cambian de nombre al
+# reemplazarlos, asi que se pueden guardar mucho tiempo. El HTML no: tiene que
+# revalidarse para que un cambio de texto se vea el mismo dia.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp                "access plus 1 year"
+  ExpiresByType image/jpeg                "access plus 1 year"
+  ExpiresByType image/png                 "access plus 1 year"
+  ExpiresByType text/css                  "access plus 1 year"
+  ExpiresByType application/javascript    "access plus 1 year"
+  ExpiresByType font/woff2                "access plus 1 year"
+  ExpiresByType text/html                 "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ------------------------------------------------------------- compresion
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json image/svg+xml
+</IfModule>
